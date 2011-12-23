@@ -1,0 +1,136 @@
+#!/usr/bin/env bash
+#
+# This script reconstructs payroll information for the first six 
+# months (Jan to June) of calendar year 2004. This script takes
+# into account regular pay and overtime pay.  If there are any
+# duplicate payroll records, they are removed.  
+#
+# This script takes one option and one argument.  The first is
+# a flag to denote that the second argument is a directory.  The
+# second an argument is the directory path to where the payroll
+# and the department records are located.
+#
+# To execute the script type ./payinfo -d dirpath
+#
+# This script outputs:
+#   Employee #ID (Employee Name) and total earned income for the 
+#   specified period
+#
+# This script uses error() and fatal() functions provided by Greg Boyd.
+
+error () {
+    # error: output an error message and return
+    # the error messages contain the program name
+    # and are written to standard error
+
+    local prog=$(basename $0)
+    echo -e "$prog:ERROR: $*">&2
+}
+
+fatal() {
+    # fatal: output an error message and then exit
+    # the error() function is used.
+    error "$*"
+    local prog=$(basename $0)
+    # Usage message
+    echo "Usage: $prog -d dirpath"
+    # Clean up temp payroll and depts files if created during cat of payroll and department records
+    rm $$payroll > /dev/null 2>&1
+    rm $$depts > /dev/null 2>&1
+    # now exit with an error
+    exit 1
+}
+
+# Check for two command line arguments
+[ $# -ne 2 ] && fatal "two arguments required"
+
+# Convenience variables
+flag=$1
+dirpath=$2
+
+# Check that option argument provided is what is expected
+[ ! "$flag" = -d ] && fatal "first argument must be -d"
+
+# Check that dirpath argument is a readable, executable directory
+[ ! -d "$dirpath" -o ! -r "$dirpath" -o ! -x "$dirpath" ] && fatal "'$dirpath' is not a readable executable directory"
+
+# Create temporary payroll and department files
+if ! cat "$dirpath"/0[1-6][0-3][0-9]04 > $$payroll 2>/dev/null; then
+    fatal "no valid payroll files in '$dirpath'"
+fi
+if ! cat "$dirpath"/[DE][0-9]{[0-9],[0-9][0-9]} > $$depts 2>/dev/null; then  
+    fatal "no valid departments files in '$dirpath'"
+fi
+
+# Check records are valid
+[ -z $$payroll -o -z $$depts ] && fatal "no valid payroll or department records found"
+
+# Find and remove duplicate payroll entries
+sort -u -o $$payroll $$payroll
+
+# Create Employee IDs file
+cut -d# -f1,1 $$payroll | sort -un > $$empIDs
+
+# Initialize total batch counters
+empsPaid=0
+totalRegularPay=0
+totalOTPay=0
+
+# Process each employee
+while read empID; do
+    if ! empDeptRec=$(grep ":$empID:" $$depts); then
+        error "skipping unknown Employee '$empID'"
+        continue
+    else
+        # Employee found
+        empsPaid=$((empsPaid+1))
+        # Tokenize on delimiter ':'
+        OIFS="$IFS"
+        IFS=:
+        set -- $(echo "$empDeptRec")
+        empName=$1
+        payRate=$4
+        otRate=$5
+        IFS="$OIFS"
+        # initialize current employee totals
+        totalHoursWorked=0
+        totalOTHoursWorked=0
+        # Put all payroll records for employee into temp file
+        grep "^$empID#" $$payroll > $$empID.payRecs
+        # Process each payroll record for current employee
+        while read payRec; do
+            # Tokenize on delimiter '#'
+            OIFS="$IFS"
+            IFS=#
+            set -- $(echo "$payRec")
+            hw=$2
+            othw=$3
+            # If no hours are found assume value is zero
+            hoursWorked=${hw:=0}
+            OTHoursWorked=${othw:=0}
+            # Calculate total hours worked
+            totalHoursWorked=$((totalHoursWorked + hoursWorked))
+            totalOTHoursWorked=$((totalOTHoursWorked + OTHoursWorked))
+            IFS="$OIFS"
+        done < $$empID.payRecs
+        # Done with current employee payroll record so delete it
+        rm $$empID.payRecs
+        # Calculate pay amounts
+        regPay=$(echo "scale=2; $payRate*$totalHoursWorked" | bc)
+        otPay=$(echo "scale=2; $otRate*$totalOTHoursWorked" | bc)
+        totalpayout=$(echo "scale=2; $regPay+$otPay" | bc)
+        echo "Employee #$empID ($empName) earned \$$totalpayout during the period"
+        # Calculate total batch process pay amounts
+        totalRegularPay=$(echo "scale=2; $totalRegularPay+$regPay" | bc)
+        totalOTPay=$(echo "scale=2; $totalOTPay+$otPay" | bc)
+    fi
+done < $$empIDs
+# Done with temp files so delete them
+rm $$payroll
+rm $$depts
+rm $$empIDs
+echo "********** TOTALS *************"
+echo -e "Employees paid:\t$empsPaid"
+echo -e "Regular pay:\t\$$totalRegularPay"
+echo -e "Overtime pay:\t\$$totalOTPay"
+exit 0

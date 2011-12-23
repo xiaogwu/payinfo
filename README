@@ -1,0 +1,17 @@
+This script reconstructs payroll information for the first six 
+months (Jan to June) of calendar year 2004. This script takes
+into account regular pay and overtime pay.  If there are any
+duplicate payroll records, they are removed.  
+
+This script takes one option and one argument.  The first is
+a flag to denote that the second argument is a directory.  The
+second an argument is the directory path to where the payroll
+and the department records are located.
+
+To execute the script type ./payinfo -d dirpath
+
+This script outputs:
+Employee ID (Employee Name) and total earned income for the 
+specified period
+
+This script uses error() and fatal() functions provided by Greg Boyd.

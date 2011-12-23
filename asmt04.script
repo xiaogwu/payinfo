@@ -1,0 +1,73 @@
+Script started on Thu Dec 15 00:15:19 2011
+xwu77@hills:~/cs160b/asmt04$ #*** Assignment Four - Xiao G. Wu
+xwu77@hills:~/cs160b/asmt04$ 
+xwu77@hills:~/cs160b/asmt04$ date
+Thu Dec 15 00:16:21 PST 2011
+xwu77@hills:~/cs160b/asmt04$ pwd
+/students/xwu77/cs160b/asmt04
+xwu77@hills:~/cs160b/asmt04$ id
+uid=27119(xwu77) gid=581(b20107) groups=7069(c71768),7071(c71770),7192(c73577)
+xwu77@hills:~/cs160b/asmt04$ 
+xwu77@hills:~/cs160b/asmt04$ ./payinfo -d /pub/cs/gboyd/cs160b/asmt04/payroll
+Employee #53 (Stevens,Daran) earned $621.00 during the period
+Employee #91 (Wilson,Fred P) earned $1692.00 during the period
+Employee #181 (Ahmed,Safdar) earned $6322.80 during the period
+Employee #333 (Haskett,Phil) earned $1290.50 during the period
+Employee #343 (Zulo,Giorgio) earned $1242.00 during the period
+Employee #418 (Doenitz,Erick) earned $818.25 during the period
+payinfo:ERROR: skipping unknown Employee '435'
+Employee #583 (Pinkerton,Tom) earned $1068.00 during the period
+Employee #732 (Roberts,Julie) earned $2551.75 during the period
+Employee #773 (Doe,Annie) earned $1814.35 during the period
+Employee #833 (Markowitz,Rob) earned $2434.50 during the period
+Employee #834 (Juliano,Clio) earned $2969.00 during the period
+Employee #958 (Banshee,Suzy) earned $1448.75 during the period
+Employee #1817 (Peabody,Connie) earned $2985.00 during the period
+Employee #1958 (Helricht,Abel) earned $335.00 during the period
+Employee #2834 (Jetson,George) earned $2044.00 during the period
+Employee #3333 (Jones,Grace) earned $1020.00 during the period
+Employee #3435 (Adams,Gomez) earned $264.00 during the period
+Employee #4181 (Fostner,Alice) earned $178.00 during the period
+Employee #4351 (Sanders,Colonel) earned $672.00 during the period
+Employee #5773 (Charles,Master) earned $640.00 during the period
+Employee #5833 (Thanhachammet,Chendrit) earned $893.80 during the period
+Employee #5834 (McConnell,Mitch) earned $740.00 during the period
+Employee #6418 (Cow,Holy) earned $220.00 during the period
+Employee #7320 (Hoosis,Jacob) earned $506.00 during the period
+Employee #7732 (Gonzales,Carlos) earned $2184.00 during the period
+Employee #8336 (Andrews,Jamal) earned $400.00 during the period
+Employee #8343 (Bush,G) earned $916.00 during the period
+Employee #9583 (Penske,Jim) earned $182.00 during the period
+********** TOTALS *************
+Employees paid:	28
+Regular pay:	$30202.15
+Overtime pay:	$8250.55
+xwu77@hills:~/cs160b/asmt04$ 
+xwu77@hills:~/cs160b/asmt04$ ./payinfo -d .
+payinfo:ERROR: no valid payroll files in '.'
+Usage: payinfo -d dirpath
+xwu77@hills:~/cs160b/asmt04$ ./payinfo -d payinfo
+payinfo:ERROR: 'payinfo' is not a readable executable directory
+Usage: payinfo -d dirpath
+xwu77@hills:~/cs160b/asmt04$ ./payinfo -d payroll/test1
+payinfo:ERROR: no valid departments files in 'payroll/test1'
+Usage: payinfo -d dirpath
+xwu77@hills:~/cs160b/asmt04$ ./payinfo -d payroll/test2
+payinfo:ERROR: no valid payroll files in 'payroll/test2'
+Usage: payinfo -d dirpath
+xwu77@hills:~/cs160b/asmt04$ ./payinfo
+payinfo:ERROR: two arguments required
+Usage: payinfo -d dirpath
+xwu77@hills:~/cs160b/asmt04$ ./payinfo -d
+payinfo:ERROR: two arguments required
+Usage: payinfo -d dirpath
+xwu77@hills:~/cs160b/asmt04$ ./payinfo -f
+payinfo:ERROR: two arguments required
+Usage: payinfo -d dirpath
+xwu77@hills:~/cs160b/asmt04$ ./payinfo -f payroll/test3
+payinfo:ERROR: first argument must be -d
+Usage: payinfo -d dirpath
+xwu77@hills:~/cs160b/asmt04$ exit
+exit
+
+script done on Thu Dec 15 00:20:12 2011

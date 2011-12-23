@@ -1,0 +1,61 @@
+Script started on Tue Apr 26 08:18:25 2011
+bash$ # Greg Boyd Assignment Four CS160B < 2pm or 7pm here >
+bash$ date
+Tue Apr 26 08:18:50 PDT 2011
+bash$ pwd
+/users/gboyd/cs160b/asmts/asmt04
+bash$ id
+uid=3496(gboyd) gid=208(cisdept) groups=217(labstaff),3010(c36471),3021(c36505),3025(c36536),3027(c36538),3075(c38703),3099(c39303),3120(c39809),7029(c76115),7030(c76120),7031(c76123),7032(c76131),7056(c77036),7088(c78728)
+bash$ 
+bash$ ./payinfo -d /pub/cs/gboyd/cs160b/asmt04/payroll
+Employee #53 (Stevens,Daran) earned $621.00 during the period
+Employee #91 (Wilson,Fred P) earned $1692.00 during the period
+Employee #181 (Ahmed,Safdar) earned $6322.80 during the period
+Employee #333 (Haskett,Phil) earned $1290.50 during the period
+Employee #343 (Zulo,Giorgio) earned $1242.00 during the period
+Employee #418 (Doenitz,Erick) earned $818.25 during the period
+payinfo:ERROR: Employee 435 is not listed in the Department files
+Employee #583 (Pinkerton,Tom) earned $1068.00 during the period
+Employee #732 (Roberts,Julie) earned $2551.75 during the period
+Employee #773 (Doe,Annie) earned $1814.35 during the period
+Employee #833 (Markowitz,Rob) earned $2434.50 during the period
+Employee #834 (Juliano,Clio) earned $2969.00 during the period
+Employee #958 (Banshee,Suzy) earned $1448.75 during the period
+Employee #1817 (Peabody,Connie) earned $2985.00 during the period
+Employee #1958 (Helricht,Abel) earned $335.00 during the period
+Employee #2834 (Jetson,George) earned $2044.00 during the period
+Employee #3333 (Jones,Grace) earned $1020.00 during the period
+Employee #3435 (Adams,Gomez) earned $264.00 during the period
+Employee #4181 (Fostner,Alice) earned $178.00 during the period
+Employee #4351 (Sanders,Colonel) earned $672.00 during the period
+Employee #5773 (Charles,Master) earned $640.00 during the period
+Employee #5833 (Thanhachammet,Chendrit) earned $893.80 during the period
+Employee #5834 (McConnell,Mitch) earned $740.00 during the period
+Employee #6418 (Cow,Holy) earned $220.00 during the period
+Employee #7320 (Hoosis,Jacob) earned $506.00 during the period
+Employee #7732 (Gonzales,Carlos) earned $2184.00 during the period
+Employee #8336 (Andrews,Jamal) earned $400.00 during the period
+Employee #8343 (Bush,G) earned $916.00 during the period
+Employee #9583 (Penske,Jim) earned $182.00 during the period
+********** TOTALS *************
+Employees paid: 28
+Regular pay:    $30202.15
+Overtime pay:   $8250.55
+bash$ 
+bash$ ./payinfo -d .
+payinfo:ERROR: no valid department files in '.'
+usage: payinfo -d directory_with_data_files
+bash$ 
+bash$ ./payinfo -d payinfo
+payinfo:ERROR: 'payinfo' is not a directory or does not have appropriate permissions (rx)
+usage: payinfo -d directory_with_data_files
+bash$ 
+bash$ ./payinfo
+payinfo:ERROR: at least two arguments required
+usage: payinfo -d directory_with_data_files
+bash$ 
+bash$ # DONT FORGET: cat your shell script here!!!
+bash$ exit
+exit
+
+script done on Tue Apr 26 08:20:13 2011
